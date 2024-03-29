@@ -96,16 +96,20 @@ class WrapAndMore extends StatelessWidget {
                 height: (controller.overflowSize.height * maxRow) +
                     (runSpacing * (maxRow - 1)) +
                     (contentPadding?.vertical ?? 0) * 2,
-                child: Wrap(
-                  spacing: spacing,
-                  runSpacing: runSpacing,
-                  children: controller.isRendered.value
-                      ? [
-                          ...children.take(controller.showChildCount.value).toList(),
-                          if (children.length - controller.showChildCount.value > 0)
-                            overflowWidget(children.length - controller.showChildCount.value)
-                        ]
-                      : children.toList(),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Wrap(
+                        spacing: spacing,
+                        runSpacing: runSpacing,
+                        children: controller.isRendered.value
+                            ? children.take(controller.showChildCount.value).toList()
+                            : children.toList(),
+                      ),
+                    ),
+                    if (children.length - controller.showChildCount.value > 0 && controller.isRendered.value)
+                      overflowWidget(children.length - controller.showChildCount.value)
+                  ],
                 ),
               ),
             );
