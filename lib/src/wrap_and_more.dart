@@ -105,8 +105,11 @@ class WrapAndMore extends StatelessWidget {
                           spacing: spacing,
                           runSpacing: runSpacing,
                           children:
-                              !(controller.isRendered.value && children.length - controller.showChildCount.value > 0)
-                                  ? children.take(controller.showChildCount.value).toList()
+                              (controller.isRendered.value && children.length - controller.showChildCount.value > 0)
+                                  ? children
+                                      .take(controller.showChildCount.value)
+                                      .map((e) => Container(color: Colors.amber, child: e))
+                                      .toList()
                                   : children.toList(),
                         ),
                       ),
