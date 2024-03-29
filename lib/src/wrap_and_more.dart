@@ -79,9 +79,7 @@ class WrapAndMore extends StatelessWidget {
     final GlobalKey rowKey = GlobalKey();
     return GetBuilder(
       key: ObjectKey(children),
-      init: WrapAndMoreController()
-        ..initData(
-            children: children, key: rowKey, maxRow: maxRow, spacing: spacing),
+      init: WrapAndMoreController()..initData(children: children, key: rowKey, maxRow: maxRow, spacing: spacing),
       builder: (controller) {
         return Obx(() {
           if (controller.isCounted.value) {
@@ -91,55 +89,52 @@ class WrapAndMore extends StatelessWidget {
                 overflowWidget(controller.showChildCount.value);
               },
               child: SizedBox(
-                height: (controller.overflowSize.height * maxRow) +
-                    (runSpacing * (maxRow - 1)),
+                height: (controller.overflowSize.height * maxRow) + (runSpacing * (maxRow - 1)),
                 child: Wrap(
                   spacing: spacing,
                   runSpacing: runSpacing,
                   children: controller.isRendered.value
                       ? [
-                          ...children
-                              .take(controller.showChildCount.value)
-                              .toList(),
-                          if (children.length -
-                                  controller.showChildCount.value >
-                              0)
-                            overflowWidget(children.length -
-                                controller.showChildCount.value)
+                          ...children.take(controller.showChildCount.value).toList(),
+                          if (children.length - controller.showChildCount.value > 0)
+                            overflowWidget(children.length - controller.showChildCount.value)
                         ]
                       : children.toList(),
                 ),
               ),
             );
           }
-          return SizedBox(
-            width: 100,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                key: rowKey,
-                children: [
-                  ...children
-                      .asMap()
-                      .map((index, Widget value) {
-                        return MapEntry(
-                            index,
-                            MeasureSize(
-                              onChange: (Size size) {
-                                controller.updateChildrenSize(index, size);
-                              },
-                              child: value,
-                            ));
-                      })
-                      .values
-                      .toList(),
-                  MeasureSize(
-                    child: overflowWidget(0),
-                    onChange: (p0) {
-                      controller.updateOverflowSize(p0);
-                    },
-                  )
-                ],
+          return Container(
+            color: Colors.red,
+            child: SizedBox(
+              width: 100,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  key: rowKey,
+                  children: [
+                    ...children
+                        .asMap()
+                        .map((index, Widget value) {
+                          return MapEntry(
+                              index,
+                              MeasureSize(
+                                onChange: (Size size) {
+                                  controller.updateChildrenSize(index, size);
+                                },
+                                child: value,
+                              ));
+                        })
+                        .values
+                        .toList(),
+                    MeasureSize(
+                      child: overflowWidget(0),
+                      onChange: (p0) {
+                        controller.updateOverflowSize(p0);
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           );
