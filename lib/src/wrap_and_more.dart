@@ -82,11 +82,17 @@ class WrapAndMore extends StatelessWidget {
     final GlobalKey rowKey = GlobalKey();
     return GetBuilder(
       key: ObjectKey(children),
-      init: WrapAndMoreController()..initData(children: children, key: rowKey, maxRow: maxRow, spacing: spacing),
+      init: WrapAndMoreController()
+        ..initData(
+          children: children,
+          key: rowKey,
+          maxRow: maxRow,
+          spacing: spacing,
+          contentPadding: contentPadding?.vertical ?? 0,
+        ),
       builder: (controller) {
         return Obx(() {
           if (controller.isCounted.value) {
-            print(controller.showChildCount.value);
             return MeasureSize(
               onChange: (size) {
                 controller.updateWrapArea(size);
@@ -107,10 +113,7 @@ class WrapAndMore extends StatelessWidget {
                           runSpacing: runSpacing,
                           children:
                               (controller.isRendered.value && children.length - controller.showChildCount.value > 0)
-                                  ? children
-                                      .take(controller.showChildCount.value)
-                                      .map((e) => Container(color: Colors.amber, child: e))
-                                      .toList()
+                                  ? children.take(controller.showChildCount.value).toList()
                                   : children.toList(),
                         ),
                       ),

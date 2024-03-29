@@ -1,6 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:collection/collection.dart';
 
 /// A controller class that manages the logic for the `WrapAndMore` widget.
 /// The `WrapAndMoreController` extends GetX's GetxController to handle reactive state management.
@@ -35,6 +35,8 @@ class WrapAndMoreController extends GetxController {
   /// The size of the overflow widget.
   Size overflowSize = const Size(0, 0);
 
+  double contentPadding = 0;
+
   /// Setter for the child widget size.
   set childSize(Size? size) {
     if (size != null) {
@@ -52,10 +54,12 @@ class WrapAndMoreController extends GetxController {
     required GlobalKey key,
     required int maxRow,
     required double spacing,
+    required double contentPadding,
   }) {
     rowKey = key;
     maxRowChild = maxRow;
     spacingChild = spacing;
+    contentPadding = contentPadding;
     _childrenArea.value = List.generate(children.length, (index) => 0);
   }
 
@@ -75,7 +79,7 @@ class WrapAndMoreController extends GetxController {
   /// Updates the size of a child widget at a given index in the `Wrap`.
   updateChildrenSize(int index, Size value) {
     _childrenArea.removeAt(index);
-    _childrenArea.insert(index, (value.width + spacingChild) * value.height);
+    _childrenArea.insert(index, (value.width + spacingChild) * value.height + contentPadding);
   }
 
   /// Updates the size of the overflow widget.
@@ -91,8 +95,7 @@ class WrapAndMoreController extends GetxController {
 
   /// Calculates the number of child widgets to display within the `Wrap`.
   void countChildWidgetShow() {
-    List<double> listOfTempArea =
-        List.generate(maxRowChild, (index) => areaWrap.value / maxRowChild);
+    List<double> listOfTempArea = List.generate(maxRowChild, (index) => areaWrap.value / maxRowChild);
 
     int indexOfTempArea = 0;
     int showAreaCount = 0;
@@ -114,8 +117,7 @@ class WrapAndMoreController extends GetxController {
       }
     }
 
-    double lastRowArea =
-        listAreaOfLastChild.sum + (overflowSize.width * overflowSize.height);
+    double lastRowArea = listAreaOfLastChild.sum + (overflowSize.width * overflowSize.height);
 
     if (lastRowArea >= listOfTempArea.last) {
       showAreaCount--;
