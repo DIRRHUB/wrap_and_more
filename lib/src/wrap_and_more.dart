@@ -105,17 +105,14 @@ class WrapAndMore extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: contentPadding ?? EdgeInsets.zero,
-                        child: Wrap(
-                          spacing: spacing,
-                          runSpacing: runSpacing,
-                          children:
-                              (controller.isRendered.value && children.length - controller.showChildCount.value > 0)
-                                  ? children.take(controller.showChildCount.value).toList()
-                                  : children.toList(),
-                        ),
+                    Padding(
+                      padding: contentPadding ?? EdgeInsets.zero,
+                      child: Wrap(
+                        spacing: spacing,
+                        runSpacing: runSpacing,
+                        children: (controller.isRendered.value && children.length - controller.showChildCount.value > 0)
+                            ? children.take(controller.showChildCount.value).toList()
+                            : children.toList(),
                       ),
                     ),
                     if (children.length - controller.showChildCount.value > 0 && controller.isRendered.value)
