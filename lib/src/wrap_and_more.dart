@@ -130,15 +130,15 @@ class WrapAndMore extends StatelessWidget {
                 children: [
                   ...children
                       .asMap()
-                      .map((index, Widget value) {
+                      .map((index, value) {
                         return MapEntry(
                             index,
-                            MeasureSize(
-                              onChange: (Size size) {
-                                controller.updateChildrenSize(index, size);
-                              },
-                              child: Padding(
-                                padding: contentPadding ?? EdgeInsets.zero,
+                            Padding(
+                              padding: contentPadding ?? EdgeInsets.zero,
+                              child: MeasureSize(
+                                onChange: (Size size) {
+                                  controller.updateChildrenSize(index, size);
+                                },
                                 child: value,
                               ),
                             ));
