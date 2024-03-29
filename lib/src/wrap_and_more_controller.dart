@@ -79,7 +79,7 @@ class WrapAndMoreController extends GetxController {
   /// Updates the size of a child widget at a given index in the `Wrap`.
   updateChildrenSize(int index, Size value) {
     _childrenArea.removeAt(index);
-    _childrenArea.insert(index, (value.width + spacingChild) * value.height + contentPadding);
+    _childrenArea.insert(index, (value.width + spacingChild) * value.height);
   }
 
   /// Updates the size of the overflow widget.
