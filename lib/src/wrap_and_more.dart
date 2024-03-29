@@ -93,7 +93,9 @@ class WrapAndMore extends StatelessWidget {
               },
               child: Container(
                 padding: contentPadding ?? EdgeInsets.zero,
-                height: (controller.overflowSize.height * maxRow) + (runSpacing * (maxRow - 1)),
+                height: (controller.overflowSize.height * maxRow) +
+                    (runSpacing * (maxRow - 1)) +
+                    (contentPadding?.vertical ?? 0) * 2,
                 child: Wrap(
                   spacing: spacing,
                   runSpacing: runSpacing,
