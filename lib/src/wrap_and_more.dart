@@ -88,7 +88,8 @@ class WrapAndMore extends StatelessWidget {
           key: rowKey,
           maxRow: maxRow,
           spacing: spacing,
-          contentPadding: ((contentPadding?.vertical ?? 0) < 0 ? 0 : contentPadding?.vertical) ?? 0,
+          contentPaddingWidth: contentPadding?.horizontal ?? 0 / 2,
+          contentPaddingHeight: contentPadding?.vertical ?? 0 / 2,
         ),
       builder: (controller) {
         return Obx(() {

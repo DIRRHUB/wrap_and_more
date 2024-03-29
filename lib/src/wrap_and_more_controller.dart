@@ -35,7 +35,9 @@ class WrapAndMoreController extends GetxController {
   /// The size of the overflow widget.
   Size overflowSize = const Size(0, 0);
 
-  double contentPadding = 0;
+  double contentPaddingWidth = 0;
+
+  double contentPaddingHeight = 0;
 
   /// Setter for the child widget size.
   set childSize(Size? size) {
@@ -54,12 +56,14 @@ class WrapAndMoreController extends GetxController {
     required GlobalKey key,
     required int maxRow,
     required double spacing,
-    required double contentPadding,
+    required double contentPaddingWidth,
+    required double contentPaddingHeight,
   }) {
     rowKey = key;
     maxRowChild = maxRow;
     spacingChild = spacing;
-    contentPadding = contentPadding;
+    contentPaddingWidth = contentPaddingWidth;
+    contentPaddingHeight = contentPaddingHeight;
     _childrenArea.value = List.generate(children.length, (index) => 0);
   }
 
@@ -89,7 +93,7 @@ class WrapAndMoreController extends GetxController {
 
   /// Updates the total area of the `Wrap`.
   void updateWrapArea(Size size) {
-    areaWrap.value = size.width * size.height;
+    areaWrap.value = size.width + contentPaddingWidth * size.height + contentPaddingHeight;
     countChildWidgetShow();
   }
 
