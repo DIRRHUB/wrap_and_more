@@ -96,6 +96,7 @@ class WrapAndMore extends StatelessWidget {
                     (runSpacing * (maxRow - 1)) +
                     (contentPadding?.vertical ?? 0) * 2,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Padding(
