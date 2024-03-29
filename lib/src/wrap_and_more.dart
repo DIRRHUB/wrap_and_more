@@ -54,6 +54,8 @@ class WrapAndMore extends StatelessWidget {
   /// The list of widgets to display within the Wrap.
   final List<Widget> children;
 
+  final EdgeInsets? contentPadding;
+
   /// Creates a WrapAndMore widget.
   ///
   /// The `maxRow` parameter specifies the maximum number of rows to display
@@ -72,6 +74,7 @@ class WrapAndMore extends StatelessWidget {
     this.runSpacing = 0.0,
     required this.overflowWidget,
     required this.children,
+    this.contentPadding,
   }) : super(key: key);
 
   @override
@@ -88,7 +91,8 @@ class WrapAndMore extends StatelessWidget {
                 controller.updateWrapArea(size);
                 overflowWidget(controller.showChildCount.value);
               },
-              child: SizedBox(
+              child: Container(
+                padding: contentPadding ?? EdgeInsets.zero,
                 height: (controller.overflowSize.height * maxRow) + (runSpacing * (maxRow - 1)),
                 child: Wrap(
                   spacing: spacing,
@@ -104,37 +108,34 @@ class WrapAndMore extends StatelessWidget {
               ),
             );
           }
-          return Container(
-            color: Colors.red,
-            child: SizedBox(
-              width: 100,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  key: rowKey,
-                  children: [
-                    ...children
-                        .asMap()
-                        .map((index, Widget value) {
-                          return MapEntry(
-                              index,
-                              MeasureSize(
-                                onChange: (Size size) {
-                                  controller.updateChildrenSize(index, size);
-                                },
-                                child: value,
-                              ));
-                        })
-                        .values
-                        .toList(),
-                    MeasureSize(
-                      child: overflowWidget(0),
-                      onChange: (p0) {
-                        controller.updateOverflowSize(p0);
-                      },
-                    )
-                  ],
-                ),
+          return SizedBox(
+            width: 100,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                key: rowKey,
+                children: [
+                  ...children
+                      .asMap()
+                      .map((index, Widget value) {
+                        return MapEntry(
+                            index,
+                            MeasureSize(
+                              onChange: (Size size) {
+                                controller.updateChildrenSize(index, size);
+                              },
+                              child: value,
+                            ));
+                      })
+                      .values
+                      .toList(),
+                  MeasureSize(
+                    child: overflowWidget(0),
+                    onChange: (p0) {
+                      controller.updateOverflowSize(p0);
+                    },
+                  )
+                ],
               ),
             ),
           );
