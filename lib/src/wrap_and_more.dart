@@ -99,20 +99,24 @@ class WrapAndMore extends StatelessWidget {
                 overflowWidget(controller.showChildCount.value);
               },
               child: SizedBox(
-                height: (controller.overflowSize.height * maxRow) +
+                /* height: (controller.overflowSize.height * maxRow) +
                     (runSpacing * (maxRow - 1)) +
                     (contentPadding?.vertical ?? 0),
+                 */
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: contentPadding ?? EdgeInsets.zero,
-                      child: Wrap(
-                        spacing: spacing,
-                        runSpacing: runSpacing,
-                        children: (controller.isRendered.value && children.length - controller.showChildCount.value > 0)
-                            ? children.take(controller.showChildCount.value).toList()
-                            : children.toList(),
+                    Expanded(
+                      child: Padding(
+                        padding: contentPadding ?? EdgeInsets.zero,
+                        child: Wrap(
+                          spacing: spacing,
+                          runSpacing: runSpacing,
+                          children:
+                              (controller.isRendered.value && children.length - controller.showChildCount.value > 0)
+                                  ? children.take(controller.showChildCount.value).toList()
+                                  : children.toList(),
+                        ),
                       ),
                     ),
                     if (children.length - controller.showChildCount.value > 0 && controller.isRendered.value)
@@ -133,16 +137,17 @@ class WrapAndMore extends StatelessWidget {
                       .asMap()
                       .map((index, value) {
                         return MapEntry(
-                            index,
-                            MeasureSize(
-                              onChange: (Size size) {
-                                controller.updateChildrenSize(index, size);
-                              },
-                              child: Padding(
-                                padding: contentPadding ?? EdgeInsets.zero,
-                                child: value,
-                              ),
-                            ));
+                          index,
+                          MeasureSize(
+                            onChange: (Size size) {
+                              controller.updateChildrenSize(index, size);
+                            },
+                            child: Padding(
+                              padding: contentPadding ?? EdgeInsets.zero,
+                              child: value,
+                            ),
+                          ),
+                        );
                       })
                       .values
                       .toList(),
