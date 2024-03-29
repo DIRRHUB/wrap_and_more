@@ -88,7 +88,7 @@ class WrapAndMore extends StatelessWidget {
           key: rowKey,
           maxRow: maxRow,
           spacing: spacing,
-          contentPadding: contentPadding?.vertical ?? 0,
+          contentPadding: ((contentPadding?.vertical ?? 0) < 0 ? 0 : contentPadding?.vertical) ?? 0,
         ),
       builder: (controller) {
         return Obx(() {
@@ -99,10 +99,9 @@ class WrapAndMore extends StatelessWidget {
                 overflowWidget(controller.showChildCount.value);
               },
               child: SizedBox(
-                /* height: (controller.overflowSize.height * maxRow) +
+                height: (controller.overflowSize.height * maxRow) +
                     (runSpacing * (maxRow - 1)) +
                     (contentPadding?.vertical ?? 0),
-                 */
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
