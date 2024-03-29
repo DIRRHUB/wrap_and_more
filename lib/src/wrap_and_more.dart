@@ -86,6 +86,7 @@ class WrapAndMore extends StatelessWidget {
       builder: (controller) {
         return Obx(() {
           if (controller.isCounted.value) {
+            print(controller.showChildCount.value);
             return MeasureSize(
               onChange: (size) {
                 controller.updateWrapArea(size);
