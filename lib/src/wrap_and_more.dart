@@ -94,7 +94,7 @@ class WrapAndMore extends StatelessWidget {
               child: SizedBox(
                 height: (controller.overflowSize.height * maxRow) +
                     (runSpacing * (maxRow - 1)) +
-                    (contentPadding?.vertical ?? 0) * 2,
+                    (contentPadding?.vertical ?? 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
