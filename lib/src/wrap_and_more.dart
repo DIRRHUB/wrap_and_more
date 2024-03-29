@@ -91,8 +91,7 @@ class WrapAndMore extends StatelessWidget {
                 controller.updateWrapArea(size);
                 overflowWidget(controller.showChildCount.value);
               },
-              child: Container(
-                padding: contentPadding ?? EdgeInsets.zero,
+              child: SizedBox(
                 height: (controller.overflowSize.height * maxRow) +
                     (runSpacing * (maxRow - 1)) +
                     (contentPadding?.vertical ?? 0) * 2,
@@ -130,7 +129,10 @@ class WrapAndMore extends StatelessWidget {
                               onChange: (Size size) {
                                 controller.updateChildrenSize(index, size);
                               },
-                              child: value,
+                              child: Padding(
+                                padding: contentPadding ?? EdgeInsets.zero,
+                                child: value,
+                              ),
                             ));
                       })
                       .values
